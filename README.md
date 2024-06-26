@@ -8,7 +8,7 @@ Manages your .sh script using screen sessions on Raspberry Pi.
 Turn on/off .sh script using screen sessions with live console output.
 
 ## How it works
-It creates screen session with custom ID in the name with logging enabled, then it waits for screen session log file. If log file is found, then it will be updating console output. After pressing stop button, the script will be turned off with SIGINIT command and screen session will be removed.
+It creates screen session with custom ID in the name with logging enabled, then it waits for screen session log file. If log file is found, then it will be updating console output on html site. After pressing stop button, the script will be turned off with SIGINIT command and screen session will be removed.
 
 ## Required packages
 * flask-socketio
