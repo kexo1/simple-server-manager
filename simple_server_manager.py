@@ -11,6 +11,7 @@ socketio = SocketIO(app)
 # CHANGE THIS
 SERVER_SCRIPT_PATH = "/mnt/sata/servers/valheim_server/start_server.sh" # Path to your server script
 SCREEN_LOG_PATH = "/mnt/sata/servers/valheim_server/screenlog.0" # Path to your screen session log
+SCREEN_NAME = "valheim_server_"
 DEFAULT_PORT = 5000
 
 # Variable to store the current session ID and server status
@@ -28,7 +29,7 @@ def start_server():
     if not server_status:
         # Generate a unique session ID
         current_session_id = str(uuid.uuid4())
-        screen_session_name = f"valheim_server_{current_session_id}"
+        screen_session_name = f"{SCREEN_NAME}{current_session_id}"
         
         # Clear the previous log file (if exists)
         try:
@@ -52,7 +53,7 @@ def start_server():
 def stop_server():
     global current_session_id, server_status
     if server_status:
-        screen_session_name = f"valheim_server_{current_session_id}"
+        screen_session_name = f"{SCREEN_NAME}{current_session_id}"
         # Send SIGINT to the screen session to gracefully stop the server and save the world
         try:
             subprocess.run(["screen", "-S", screen_session_name, "-X", "stuff", "^C"])
