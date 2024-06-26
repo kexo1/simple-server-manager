@@ -1,1 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Valheim Server Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .console {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            height: 400px;
+            overflow-y: scroll;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .button-container {
+            margin-bottom: 20px;
+        }
+    </style>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        document.addEventListener('DOMContentLoaded', function () {
+            var socket = io();
 
+            socket.on('console_output', function (msg) {
+                var consoleDiv = document.querySelector('.console');
+                consoleDiv.innerHTML += msg.data;
+                consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Valheim Server Manager</h1>
+    <p>Status: {{ 'Online' if status else 'Offline' }}</p>
+    <div class="button-container">
+        <form method="post" action="{{ url_for('start_server') }}">
+            <button type="submit" {{ 'disabled' if status }}>Start Server</button>
+        </form>
+        <form method="post" action="{{ url_for('stop_server') }}">
+            <button type="submit" {{ 'disabled' if not status }}>Stop Server</button>
+        </form>
+    </div>
+    <h2>Console Output</h2>
+    <div class="console"></div>
+</body>
+</html>
